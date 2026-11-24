@@ -36,7 +36,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 SLUG = "news-image-20261124"
 DAY_LABEL = "TUESDAY,  24  NOVEMBER  2026"
-SEED = 20261124
+SEED = 24112026
 OUT_DIR = "/output"
 OUT_NAME = "entry.png"
 W, H = 1024, 1024
@@ -53,6 +53,10 @@ TEAL = (46, 120, 110)
 GREY = (96, 92, 86)
 RULE = (198, 188, 168)
 SEA = (28, 68, 96)
+
+# Hero sun position, rebuilt in this session: the sun now sets on the
+# left of the panel (was on the right), low over the sea.
+SUN_CX, SUN_CY = 128, 92
 
 LEAD = {
     "kicker": "ANTALYA, TURKIYE",
@@ -164,8 +168,7 @@ def wrap_text(draw, text, font, max_width):
 def fit_ticker(draw, text, font, max_width):
     """Trim the ticker word by word until it fits one line, ending in ..."""
     while draw.textlength(text, font=font) > max_width and " " in text:
-        if text.endswith(" \u2026"):
-            text = text[:-2].rstrip()
+        text = text.rstrip(" \u2026")
         text = text.rsplit(" ", 1)[0].rstrip(" \u2022")
         text += " \u2026"
     return text
@@ -195,8 +198,8 @@ def paint_hero(draw, box, rng):
         sy = rng.randint(y0 + 8, y0 + 150)
         s = rng.choice((1, 1, 2))
         draw.ellipse([sx, sy, sx + s, sy + s], fill=(235, 230, 210))
-    # Golden sun, low over the sea.
-    cx, cy = x0 + 830, y0 + 118
+    # Golden sun, low over the sea on the left of the panel.
+    cx, cy = x0 + SUN_CX, y0 + SUN_CY
     for rad, col in ((74, (214, 164, 65, 60)), (58, GOLD), (44, (232, 190, 100))):
         draw.ellipse([cx - rad, cy - rad, cx + rad, cy + rad], fill=col)
     # Globe: deep teal disc, meridian ellipses, abstract continents.
