@@ -62,68 +62,39 @@ SUN_X, SUN_Y = 128, 92
 LEAD_STORY = {
     "kicker": "ANTALYA, TURKIYE",
     "headline": "COP31 ends in deadlock: no deal on fossil fuels",
-    "body": (
-        "After two weeks of talks and days of overtime, the UN climate "
-        "summit in Antalya closes with no agreement on stronger "
-        "fossil-fuel language. The EU, the UK and island states refuse "
-        "a pact that never mentions fossil fuels at all."
-    ),
+    "body": "After two weeks of talks and days of overtime, the UN climate summit in Antalya closes with no agreement on stronger fossil-fuel language. The EU, the UK and island states refuse a pact that never mentions fossil fuels at all.",
 }
 
 GRID_STORIES = [
-    {
-        "icon": "flame",
-        "kicker": "BANTEN, INDONESIA",
-        "headline": "Factory fire kills at least 24",
-        "body": (
-            "A blaze at a candy factory leaves at least 24 dead and "
-            "around 30 missing as rescuers search the ruins."
-        ),
-    },
-    {
-        "icon": "ship",
-        "kicker": "GULF OF FINLAND",
-        "headline": "Russian cargo ship ablaze after drone strike",
-        "body": (
-            "The Sparta II catches fire off Finland after a reported "
-            "drone attack, the war at sea reaching Baltic waters."
-        ),
-    },
-    {
-        "icon": "missile",
-        "kicker": "KYIV REGION, UKRAINE",
-        "headline": "Drones and missiles strike Kyiv region",
-        "body": (
-            "Russian attacks damage homes in Dymer and leave people "
-            "missing, as the war grinds into another winter."
-        ),
-    },
-    {
-        "icon": "chip",
-        "kicker": "MARKETS",
-        "headline": "Huang returns; Nvidia climbs almost $1tn",
-        "body": (
-            "Jensen Huang is back at Nvidia and tech stocks rally, "
-            "adding nearly a trillion dollars to its value."
-        ),
-    },
+    {"icon": "flame", "kicker": "BANTEN, INDONESIA",
+     "headline": "Factory fire kills at least 24",
+     "body": "A blaze at a candy factory leaves at least 24 dead and around 30 missing as rescuers search the ruins."},
+    {"icon": "ship", "kicker": "GULF OF FINLAND",
+     "headline": "Russian cargo ship ablaze after drone strike",
+     "body": "The Sparta II catches fire off Finland after a reported drone attack, the war at sea reaching Baltic waters."},
+    {"icon": "missile", "kicker": "KYIV REGION, UKRAINE",
+     "headline": "Drones and missiles strike Kyiv region",
+     "body": "Russian attacks damage homes in Dymer and leave people missing, as the war grinds into another winter."},
+    {"icon": "chip", "kicker": "MARKETS",
+     "headline": "Huang returns; Nvidia climbs almost $1tn",
+     "body": "Jensen Huang is back at Nvidia and tech stocks rally, adding nearly a trillion dollars to its value."},
 ]
 
 TICKER_LINE = (
-    "Lisbon marches against the cost of living  \u2022  FIFA picks the hosts "
-    "of the 2031 and 2035 Women's World Cups  \u2022  Verstappen wins the "
-    "Las Vegas Grand Prix  \u2022  Gukesh defends his chess crown against "
-    "Sindarov in Geneva  \u2022  Pant's 128 as India-New Zealand Test ends "
-    "in a draw"
+    "Lisbon marches against the cost of living  \u2022  "
+    "FIFA picks the hosts of the 2031 and 2035 Women's World Cups  \u2022  "
+    "Verstappen wins the Las Vegas Grand Prix  \u2022  "
+    "Gukesh defends his chess crown against Sindarov in Geneva  \u2022  "
+    "Pant's 128 as India-New Zealand Test ends in a draw"
 )
 
 # The five stories again, in reading order, for the fixed run log.
 RUN_LOG = [
-    ("Antalya", "COP31 ends in deadlock: no deal on fossil fuels"),
-    ("Banten", "Factory fire kills at least 24, around 30 missing"),
-    ("Gulf of Finland", "Russian cargo ship Sparta II ablaze after drone strike"),
-    ("Kyiv region", "Russian drones and missiles strike homes in Dymer"),
-    ("Markets", "Huang returns; Nvidia climbs almost $1tn"),
+    ["Antalya", "COP31 ends in deadlock: no deal on fossil fuels"],
+    ["Banten", "Factory fire kills at least 24, around 30 missing"],
+    ["Gulf of Finland", "Russian cargo ship Sparta II ablaze after drone strike"],
+    ["Kyiv region", "Russian drones and missiles strike homes in Dymer"],
+    ["Markets", "Huang returns; Nvidia climbs almost $1tn"],
 ]
 
 
@@ -223,19 +194,34 @@ def draw_hero_panel(draw, box, rng):
     gx, gy, gr = x0 + 250, y0 + 165, 118
     draw.ellipse([gx - gr, gy - gr, gx + gr, gy + gr], fill=(30, 78, 92))
     draw.ellipse([gx - gr, gy - gr, gx + gr, gy + gr], outline=(150, 190, 185), width=3)
-    for k in range(1, 4):
-        rx = gr * k // 4
-        draw.ellipse([gx - rx, gy - gr, gx + rx, gy + gr],
+    for ring in range(1, 4):
+        half = gr * ring // 4
+        draw.ellipse([gx - half, gy - gr, gx + half, gy + gr],
                      outline=(120, 170, 165), width=2)
     draw.line([gx, gy - gr, gx, gy + gr], fill=(120, 170, 165), width=2)
     draw.line([gx - gr, gy, gx + gr, gy], fill=(120, 170, 165), width=2)
     continents = [
-        [(gx - 78, gy - 58), (gx - 38, gy - 66), (gx - 18, gy - 30),
-         (gx - 52, gy - 12), (gx - 84, gy - 28)],
-        [(gx + 12, gy - 46), (gx + 52, gy - 52), (gx + 66, gy - 14),
-         (gx + 30, gy + 2), (gx + 6, gy - 18)],
-        [(gx - 42, gy + 34), (gx - 6, gy + 26), (gx + 12, gy + 58),
-         (gx - 22, gy + 72), (gx - 52, gy + 60)],
+        [
+            (gx - 78, gy - 58),
+            (gx - 38, gy - 66),
+            (gx - 18, gy - 30),
+            (gx - 52, gy - 12),
+            (gx - 84, gy - 28),
+        ],
+        [
+            (gx + 12, gy - 46),
+            (gx + 52, gy - 52),
+            (gx + 66, gy - 14),
+            (gx + 30, gy + 2),
+            (gx + 6, gy - 18),
+        ],
+        [
+            (gx - 42, gy + 34),
+            (gx - 6, gy + 26),
+            (gx + 12, gy + 58),
+            (gx - 22, gy + 72),
+            (gx - 52, gy + 60),
+        ],
     ]
     for shape in continents:
         draw.polygon(shape, fill=(74, 148, 106))
@@ -244,37 +230,63 @@ def draw_hero_panel(draw, box, rng):
 
 def draw_flame_mark(draw, x, y, s):
     """A small flame: an orange teardrop with a gold heart."""
-    pts = [(x + 0.5 * s, y + 0.05 * s), (x + 0.85 * s, y + 0.45 * s),
-           (x + 0.95 * s, y + 0.75 * s), (x + 0.7 * s, y + 0.95 * s),
-           (x + 0.3 * s, y + 0.95 * s), (x + 0.05 * s, y + 0.75 * s),
-           (x + 0.15 * s, y + 0.45 * s)]
-    draw.polygon(pts, fill=(196, 64, 32))
+    outline = [
+        (x + 0.50 * s, y + 0.05 * s),
+        (x + 0.85 * s, y + 0.45 * s),
+        (x + 0.95 * s, y + 0.75 * s),
+        (x + 0.70 * s, y + 0.95 * s),
+        (x + 0.30 * s, y + 0.95 * s),
+        (x + 0.05 * s, y + 0.75 * s),
+        (x + 0.15 * s, y + 0.45 * s),
+    ]
+    draw.polygon(outline, fill=(196, 64, 32))
     draw.ellipse([x + 0.32 * s, y + 0.5 * s, x + 0.68 * s, y + 0.88 * s],
                  fill=GOLD_COL)
 
 
 def draw_ship_mark(draw, x, y, s):
     """A small cargo ship: navy hull, mast, red sail, teal waterline."""
-    draw.polygon([(x + 0.05 * s, y + 0.62 * s), (x + 0.95 * s, y + 0.62 * s),
-                  (x + 0.8 * s, y + 0.92 * s), (x + 0.2 * s, y + 0.92 * s)],
-                 fill=NAVY_COL)
+    hull = [
+        (x + 0.05 * s, y + 0.62 * s),
+        (x + 0.95 * s, y + 0.62 * s),
+        (x + 0.80 * s, y + 0.92 * s),
+        (x + 0.20 * s, y + 0.92 * s),
+    ]
+    draw.polygon(hull, fill=NAVY_COL)
     draw.line([x + 0.5 * s, y + 0.08 * s, x + 0.5 * s, y + 0.62 * s],
               fill=NAVY_COL, width=4)
-    draw.polygon([(x + 0.5 * s, y + 0.12 * s), (x + 0.88 * s, y + 0.55 * s),
-                  (x + 0.5 * s, y + 0.55 * s)], fill=RED_COL)
+    sail = [
+        (x + 0.50 * s, y + 0.12 * s),
+        (x + 0.88 * s, y + 0.55 * s),
+        (x + 0.50 * s, y + 0.55 * s),
+    ]
+    draw.polygon(sail, fill=RED_COL)
     draw.line([x, y + 0.97 * s, x + s, y + 0.97 * s], fill=TEAL_COL, width=3)
 
 
 def draw_missile_mark(draw, x, y, s):
     """A small missile: grey body with two red fins."""
-    draw.polygon([(x + 0.5 * s, y + 0.05 * s), (x + 0.68 * s, y + 0.3 * s),
-                  (x + 0.68 * s, y + 0.72 * s), (x + 0.5 * s, y + 0.95 * s),
-                  (x + 0.32 * s, y + 0.72 * s), (x + 0.32 * s, y + 0.3 * s)],
-                 fill=(96, 92, 86))
-    draw.polygon([(x + 0.32 * s, y + 0.3 * s), (x + 0.14 * s, y + 0.55 * s),
-                  (x + 0.32 * s, y + 0.5 * s)], fill=RED_COL)
-    draw.polygon([(x + 0.68 * s, y + 0.3 * s), (x + 0.86 * s, y + 0.55 * s),
-                  (x + 0.68 * s, y + 0.5 * s)], fill=RED_COL)
+    body = [
+        (x + 0.50 * s, y + 0.05 * s),
+        (x + 0.68 * s, y + 0.30 * s),
+        (x + 0.68 * s, y + 0.72 * s),
+        (x + 0.50 * s, y + 0.95 * s),
+        (x + 0.32 * s, y + 0.72 * s),
+        (x + 0.32 * s, y + 0.30 * s),
+    ]
+    draw.polygon(body, fill=(96, 92, 86))
+    fin_left = [
+        (x + 0.32 * s, y + 0.30 * s),
+        (x + 0.14 * s, y + 0.55 * s),
+        (x + 0.32 * s, y + 0.50 * s),
+    ]
+    draw.polygon(fin_left, fill=RED_COL)
+    fin_right = [
+        (x + 0.68 * s, y + 0.30 * s),
+        (x + 0.86 * s, y + 0.55 * s),
+        (x + 0.68 * s, y + 0.50 * s),
+    ]
+    draw.polygon(fin_right, fill=RED_COL)
 
 
 def draw_chip_mark(draw, x, y, s):
@@ -311,29 +323,29 @@ def draw_masthead(d):
 
 def draw_lead_story(d):
     """Headline and body of the lead story, with a rule underneath."""
-    lead_font = headline_face(34)
-    for i, line in enumerate(wrap_line(d, LEAD_STORY["headline"], lead_font, 940)):
-        d.text((42, 502 + i * 42), line, font=lead_font, fill=INK_COL)
-    body_font = body_face(21)
-    lead_lines = wrap_line(d, LEAD_STORY["body"], body_font, 940)
+    head_font = headline_face(34)
+    for i, line in enumerate(wrap_line(d, LEAD_STORY["headline"], head_font, 940)):
+        d.text((42, 502 + i * 42), line, font=head_font, fill=INK_COL)
+    text_font = body_face(21)
+    lead_lines = wrap_line(d, LEAD_STORY["body"], text_font, 940)
     for i, line in enumerate(lead_lines):
-        d.text((42, 590 + i * 28), line, font=body_font, fill=(52, 52, 52))
+        d.text((42, 590 + i * 28), line, font=text_font, fill=(52, 52, 52))
     d.line([42, 672, W - 42, 672], fill=RULE_COL, width=2)
 
 
 def draw_story_grid(d):
     """Four stories in a two-by-two grid, each with its pictogram."""
-    cell_w, cell_h = 470, 138
+    col_w, row_h = 470, 138
     origins = [(42, 692), (512, 692), (42, 844), (512, 844)]
     for story, (ox, oy) in zip(GRID_STORIES, origins):
         MARK_DRAWERS[story["icon"]](d, ox, oy + 6, 44)
         tx = ox + 58
         d.text((tx, oy), story["kicker"], font=label_face(15), fill=RED_COL)
-        for i, line in enumerate(wrap_line(d, story["headline"],
-                                           headline_face(21), cell_w - 58)):
+        head_lines = wrap_line(d, story["headline"], headline_face(21), col_w - 58)
+        for i, line in enumerate(head_lines):
             d.text((tx, oy + 22 + i * 26), line, font=headline_face(21), fill=INK_COL)
-        blines = wrap_line(d, story["body"], body_face(16), cell_w - 58)
-        for i, line in enumerate(blines[:3]):
+        body_lines = wrap_line(d, story["body"], body_face(16), col_w - 58)
+        for i, line in enumerate(body_lines[:3]):
             d.text((tx, oy + 78 + i * 21), line, font=body_face(16),
                    fill=(52, 52, 52))
     d.line([512, 692, 512, 982], fill=RULE_COL, width=2)
